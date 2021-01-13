@@ -7,6 +7,19 @@ import tflite_runtime.interpreter as tflite
 import numpy as np
 from PIL import Image
 import shutil
+import os
+
+# Guardar las rutas necesarias
+path_model = "/home/pi/Detenccion_Mascarillas/mask_classifier_1.tflite"
+path_images = "/home/pi/Detenccion_Mascarillas/images"
+path_image = "/home/pi/Detenccion_Mascarillas/images/cam_image.jpg"
+path_image_infra = "/home/pi/Detenccion_Mascarillas/images/infractores"
+path_image_pos = "/home/pi/Detenccion_Mascarillas/images/positivos"
+
+# Crear carpetas
+os.makedirs(path_images, exist_ok=True)
+os.makedirs(path_image_infra, exist_ok=True)
+os.makedirs(path_image_pos, exist_ok=True)
 
 # Crear un objeto Picamera
 camera = PiCamera()
@@ -17,12 +30,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.OUT)
 
 while True:
-    # Guardar las rutas necesarias
-    path_model = "/home/pi/Detenccion_Mascarillas/mask_classifier_1.tflite"
-    path_image = "/home/pi/Detenccion_Mascarillas/images/cam_image.jpg"
-    path_image_infra = "/home/pi/Detenccion_Mascarillas/images/infractores"
-    path_image_pos = "/home/pi/Detenccion_Mascarillas/images/positivos"
-
     # Tomar captura
     camera.resolution = (300, 300)
     camera.start_preview()
