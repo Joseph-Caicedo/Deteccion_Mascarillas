@@ -31,14 +31,14 @@ GPIO.setup(23, GPIO.OUT)
 
 while True:
     # Tomar captura
-    print(Capturando imagen...)
+    print("Capturando imagen...")
     camera.resolution = (300, 300)
     camera.start_preview()
     sleep(5)
     camera.capture(path_image)
     camera.stop_preview()
-    
-    print(Detectando mascarilla...)
+    print("Captura tomada correcta\n")
+    print("Detectando mascarilla...")
     # Importar el modleo de tflite
     interpreter = tflite.Interpreter(model_path=path_model)
     interpreter.allocate_tensors()
@@ -73,13 +73,13 @@ while True:
     
     # Revisar condición
     if not (scalar_result):
-        print("No se detecta mascarilla")
+        print("No se detecta mascarilla\n")
         shutil.copy(path_image, path_image_infra + "/{}-{}-{}_{}:{}:{}.jpg".format(now.year, now.month, now.day, now.hour, now.minute, now.second))
         GPIO.output(23, False)
         time.sleep(5)
         GPIO.output(23, False)
     else:
-        print("Mascarilla detectada")
+        print("Mascarilla detectada\n")
         shutil.copy(path_image, path_image_pos + "/{}-{}-{}_{}:{}:{}.jpg".format(now.year, now.month, now.day, now.hour, now.minute, now.second))
         GPIO.output(23, True)
         time.sleep(5)
